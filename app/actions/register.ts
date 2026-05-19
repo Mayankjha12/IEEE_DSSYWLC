@@ -124,22 +124,26 @@ export async function submitRegistration(
       profileToken,
     );
 
-    // Push to Google Sheet (fire-and-forget — don't block registration)
-    pushRegistrationToSheet({
-      profileToken,
-      fullName: values.fullName,
-      email: normalizedEmail,
-      phone: values.phone,
-      affiliation: values.affiliation,
-      category: values.category,
-      referralCode: values.referralCode,
-      isMember: values.isMember,
-      ieeeId: values.ieeeId,
-      studentBranchCode: values.studentBranchCode,
-      ieeeCardS3Key: values.ieeeCardS3Key,
-      paymentScreenshotS3Key: values.paymentScreenshotS3Key,
-      registrationStatus: values.registrationStatus,
-    }).catch((err) => console.error("Sheet sync failed:", err));
+    // Push to Google Sheet (await to prevent serverless function from freezing before request completes)
+    try {
+      await pushRegistrationToSheet({
+        profileToken,
+        fullName: values.fullName,
+        email: normalizedEmail,
+        phone: values.phone,
+        affiliation: values.affiliation,
+        category: values.category,
+        referralCode: values.referralCode,
+        isMember: values.isMember,
+        ieeeId: values.ieeeId,
+        studentBranchCode: values.studentBranchCode,
+        ieeeCardS3Key: values.ieeeCardS3Key,
+        paymentScreenshotS3Key: values.paymentScreenshotS3Key,
+        registrationStatus: values.registrationStatus,
+      });
+    } catch (err) {
+      console.error("Sheet sync failed:", err);
+    }
 
     return {
       success: true,
