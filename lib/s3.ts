@@ -3,14 +3,27 @@ import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 export const MAX_UPLOAD_SIZE_BYTES = 500 * 1024;
+
+/** Allowed for payment screenshots (images only). */
 export const ALLOWED_IMAGE_CONTENT_TYPES = [
   "image/jpeg",
   "image/png",
   "image/webp",
 ] as const;
 
+/** Allowed for IEEE card uploads (images + PDF). */
+export const ALLOWED_DOCUMENT_CONTENT_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+] as const;
+
 export type AllowedImageContentType =
   (typeof ALLOWED_IMAGE_CONTENT_TYPES)[number];
+
+export type AllowedDocumentContentType =
+  (typeof ALLOWED_DOCUMENT_CONTENT_TYPES)[number];
 
 function requiredEnv(name: string): string {
   const value = process.env[name];
@@ -46,7 +59,13 @@ export function isAllowedImageContentType(
   return (ALLOWED_IMAGE_CONTENT_TYPES as readonly string[]).includes(fileType);
 }
 
-function extensionFromContentType(contentType: AllowedImageContentType): string {
+export function isAllowedDocumentContentType(
+  fileType: string
+): fileType is AllowedDocumentContentType {
+  return (ALLOWED_DOCUMENT_CONTENT_TYPES as readonly string[]).includes(fileType);
+}
+
+function extensionFromContentType(contentType: AllowedDocumentContentType): string {
   switch (contentType) {
     case "image/jpeg":
       return "jpg";
@@ -54,6 +73,8 @@ function extensionFromContentType(contentType: AllowedImageContentType): string 
       return "png";
     case "image/webp":
       return "webp";
+    case "application/pdf":
+      return "pdf";
     default:
       return "bin";
   }
@@ -61,7 +82,7 @@ function extensionFromContentType(contentType: AllowedImageContentType): string 
 
 export function buildS3ObjectKey(
   registrationId: string,
-  contentType: AllowedImageContentType
+  contentType: AllowedDocumentContentType
 ): string {
   const timestamp = Date.now();
   const randomPart = randomBytes(8).toString("hex");
@@ -75,7 +96,7 @@ export async function generatePresignedUploadUrl({
   fileSizeBytes,
 }: {
   key: string;
-  contentType: AllowedImageContentType;
+  contentType: AllowedDocumentContentType;
   fileSizeBytes?: number;
 }): Promise<{ url: string; key: string }> {
   if (fileSizeBytes !== undefined) {
@@ -91,7 +112,6 @@ export async function generatePresignedUploadUrl({
     Bucket: requiredEnv("S3_BUCKET_NAME"),
     Key: key,
     ContentType: contentType,
-    ...(fileSizeBytes ? { ContentLength: fileSizeBytes } : {}),
   });
 
   const url = await getSignedUrl(getS3Client(), command, { expiresIn: 300 });

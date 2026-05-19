@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { registrations } from "@/lib/db/schema";
 import { sendConfirmationEmail } from "@/lib/email";
 import { step1Schema, step2Schema, step3Schema } from "@/lib/validations";
+import { pushRegistrationToSheet } from "@/lib/google-sheets";
 
 export type RegisterState = {
   success: boolean;
@@ -38,7 +39,7 @@ function readString(formData: FormData, key: string): string {
 
 export async function submitRegistration(
   _prevState: RegisterState,
-  formData: FormData
+  formData: FormData,
 ): Promise<RegisterState> {
   const step1Input = {
     fullName: readString(formData, "fullName"),
@@ -70,7 +71,7 @@ export async function submitRegistration(
       errors: mergeFieldErrors(
         step1Parsed.success ? {} : step1Parsed.error.flatten().fieldErrors,
         step2Parsed.success ? {} : step2Parsed.error.flatten().fieldErrors,
-        step3Parsed.success ? {} : step3Parsed.error.flatten().fieldErrors
+        step3Parsed.success ? {} : step3Parsed.error.flatten().fieldErrors,
       ),
       message: "Please fix the errors below.",
     };
@@ -112,19 +113,33 @@ export async function submitRegistration(
       updatedAt: now,
     };
 
-    await db
-      .insert(registrations)
-      .values(values)
-      .onConflictDoUpdate({
-        target: registrations.email,
-        set: values,
-      });
+    await db.insert(registrations).values(values).onConflictDoUpdate({
+      target: registrations.email,
+      set: values,
+    });
 
     const emailSent = await sendConfirmationEmail(
       normalizedEmail,
       values.fullName,
-      profileToken
+      profileToken,
     );
+
+    // Push to Google Sheet (fire-and-forget — don't block registration)
+    pushRegistrationToSheet({
+      profileToken,
+      fullName: values.fullName,
+      email: normalizedEmail,
+      phone: values.phone,
+      affiliation: values.affiliation,
+      category: values.category,
+      referralCode: values.referralCode,
+      isMember: values.isMember,
+      ieeeId: values.ieeeId,
+      studentBranchCode: values.studentBranchCode,
+      ieeeCardS3Key: values.ieeeCardS3Key,
+      paymentScreenshotS3Key: values.paymentScreenshotS3Key,
+      registrationStatus: values.registrationStatus,
+    }).catch((err) => console.error("Sheet sync failed:", err));
 
     return {
       success: true,

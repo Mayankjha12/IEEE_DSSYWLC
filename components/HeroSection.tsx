@@ -3,40 +3,65 @@ import Link from "next/link";
 export default function HeroSection() {
   return (
     <header className="relative min-h-[85vh] flex items-center overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          className="w-full h-full object-cover"
-          alt="IEEE Delhi Section Congress"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCFguEiQfcA7VJXZ0rH8gt7f3Vzfh59eNjrMeMyYOWubIWdBGcMvXkVEUBDlaRGEzVoDom6soKTofj18YoEccwK0KxUMGidvtyT75rUdjaOHnxeMhsJCzWri2zHZC6U6KiiNEpFtPeKamAWJfUdBhrXFye7G23J1JBgvBFrSk1CcZI_ce6CSmvSE7nj87fCIxVOycdQrT13Xd8c3oBBOUbziljItOWwsrvdzWHWsmAcHOxAQicTVrTEueRxQgguOV6l9bK-unG2SE"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
+      {/* Gradient Background — maroon theme */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#4a0e1e] via-[#7B1F34] to-[#2d0a14]">
+        <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute top-1/2 left-1/3 w-64 h-64 rounded-full bg-[#a0334d]/20 blur-2xl" />
       </div>
 
       {/* Content — left-aligned */}
       <div className="relative z-10 section-container py-20 animate-on-scroll">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1]">
-            Delhi Section Student, Young Professionals &amp; Women in Engineering and Life member Congress
+            Delhi Section Student, Young Professionals &amp; Women in
+            Engineering and Life member Congress
           </h1>
 
           <p className="text-lg text-white/80 max-w-2xl mb-10 leading-relaxed">
-            Converging young minds, visionary women engineers, and distinguished life members for a future of innovation.
+            Converging young minds, visionary women engineers, and distinguished
+            life members for a future of innovation.
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <Link
+            <a
               href="#schedule"
               className="px-8 py-3 bg-white text-[#7B1F34] rounded font-bold text-sm hover:bg-gray-100 transition-all shadow-md inline-block"
             >
               View Schedule
-            </Link>
+            </a>
             <Link
               href="/register"
-              className="px-8 py-3 bg-[#7B1F34] text-white rounded font-bold text-sm hover:brightness-110 transition-all shadow-md inline-block"
+              className="px-8 py-3 border-2 border-white text-white rounded font-bold text-sm hover:bg-white/10 transition-all shadow-md inline-block"
             >
               Register Now
             </Link>
+          </div>
+
+          {/* Organizing Bodies Logos */}
+          <div className="mt-14 pt-8 border-t border-white/10">
+            <p className="text-white/40 text-xs uppercase tracking-widest font-semibold mb-5">
+              Organized by
+            </p>
+            <div className="flex flex-wrap items-center gap-8">
+              <img
+                src="/logos/DSSYWLC Logo (3).png"
+                alt="DSSYWLC '25 — IEEE Delhi Section SAC"
+                className="h-16 w-auto object-contain"
+              />
+              <div className="bg-white/90 rounded-lg px-3 py-2">
+                <img
+                  src="/logos/ssn logo.png"
+                  alt="IEEE NSUT Student Branch"
+                  className="h-14 w-auto object-contain"
+                />
+              </div>
+              <img
+                src="/logos/ieee_newlogo.png"
+                alt="IEEE Delhi Section Student Activities Committee"
+                className="h-12 w-auto object-contain"
+              />
+            </div>
           </div>
         </div>
       </div>

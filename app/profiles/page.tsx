@@ -44,17 +44,21 @@ function renderInvalidState() {
   return (
     <div className="min-h-screen bg-[#f0f4f8] px-4 py-12">
       <div className="mx-auto max-w-xl rounded-xl bg-white p-10 text-center shadow-lg">
-        <h1 className="mb-3 text-2xl font-bold text-slate-800">Invalid or Expired Link</h1>
+        <h1 className="mb-3 text-2xl font-bold text-slate-800">
+          Invalid or Expired Link
+        </h1>
         <p className="text-sm text-gray-600">
-          The profile link is invalid, expired, or no longer available. Please use the
-          latest profile link from your confirmation email.
+          The profile link is invalid, expired, or no longer available. Please
+          use the latest profile link from your confirmation email.
         </p>
       </div>
     </div>
   );
 }
 
-export default async function ProfilesPage({ searchParams }: ProfilesPageProps) {
+export default async function ProfilesPage({
+  searchParams,
+}: ProfilesPageProps) {
   const token = toSingleValue((await searchParams).token)?.trim();
 
   if (!token) {
@@ -74,9 +78,11 @@ export default async function ProfilesPage({ searchParams }: ProfilesPageProps) 
   }
 
   const statusLabel =
-    statusLabels[registration.registrationStatus] || registration.registrationStatus;
+    statusLabels[registration.registrationStatus] ||
+    registration.registrationStatus;
   const statusColorClass =
-    statusColors[registration.registrationStatus] || "bg-slate-100 text-slate-700";
+    statusColors[registration.registrationStatus] ||
+    "bg-slate-100 text-slate-700";
 
   return (
     <div className="min-h-screen bg-[#f0f4f8] px-4 py-12">
@@ -84,8 +90,12 @@ export default async function ProfilesPage({ searchParams }: ProfilesPageProps) 
         <div className="rounded-xl bg-white p-8 shadow-lg">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Registration Profile</h1>
-              <p className="text-sm text-gray-500">DSSYWLC 2025 submission details</p>
+              <h1 className="text-2xl font-bold text-slate-800">
+                Registration Profile
+              </h1>
+              <p className="text-sm text-gray-500">
+                DSSYWLC 2025 submission details
+              </p>
             </div>
             <span
               className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${statusColorClass}`}
@@ -102,19 +112,27 @@ export default async function ProfilesPage({ searchParams }: ProfilesPageProps) 
               <dl className="space-y-3 text-sm">
                 <div>
                   <dt className="text-gray-500">Full Name</dt>
-                  <dd className="font-medium text-slate-800">{registration.fullName}</dd>
+                  <dd className="font-medium text-slate-800">
+                    {registration.fullName}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-gray-500">Email</dt>
-                  <dd className="font-medium text-slate-800">{registration.email}</dd>
+                  <dd className="font-medium text-slate-800">
+                    {registration.email}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-gray-500">Phone</dt>
-                  <dd className="font-medium text-slate-800">{registration.phone}</dd>
+                  <dd className="font-medium text-slate-800">
+                    {registration.phone}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-gray-500">Affiliation</dt>
-                  <dd className="font-medium text-slate-800">{registration.affiliation}</dd>
+                  <dd className="font-medium text-slate-800">
+                    {registration.affiliation}
+                  </dd>
                 </div>
               </dl>
             </section>
@@ -127,7 +145,8 @@ export default async function ProfilesPage({ searchParams }: ProfilesPageProps) 
                 <div>
                   <dt className="text-gray-500">Category</dt>
                   <dd className="font-medium text-slate-800">
-                    {categoryLabels[registration.category] || registration.category}
+                    {categoryLabels[registration.category] ||
+                      registration.category}
                   </dd>
                 </div>
                 <div>
@@ -172,10 +191,12 @@ export default async function ProfilesPage({ searchParams }: ProfilesPageProps) 
               Payment proof: <span className="font-semibold">Received</span>
             </p>
             <p className="text-slate-700">
-              Current status: <span className="font-semibold">{statusLabel}</span>
+              Current status:{" "}
+              <span className="font-semibold">{statusLabel}</span>
             </p>
             <p className="text-gray-500">
-              A confirmation and status updates are sent to your registered email address.
+              A confirmation and status updates are sent to your registered
+              email address.
             </p>
           </div>
         </div>

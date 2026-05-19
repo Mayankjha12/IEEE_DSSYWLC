@@ -9,12 +9,17 @@ import {
   registrationSubmissionSchema,
   step1Schema,
   step2Schema,
-  step3Schema,
 } from "@/lib/validations";
 
 const initialSubmitState: RegisterState = { success: false };
 const MAX_UPLOAD_SIZE_BYTES = 500 * 1024;
-const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+const ALLOWED_DOCUMENT_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+] as const;
 
 type UploadType = "ieee_card" | "payment_screenshot";
 
@@ -38,16 +43,19 @@ type Step3FormState = {
   paymentScreenshotS3Key: string;
 };
 
-const categoryLabels: Record<(typeof registrationCategories)[number], string> = {
-  student_member: "Student Member",
-  graduate_student_member: "Graduate Student Member",
-  professional_member: "Professional Member",
-  faculty_member: "Faculty Member",
-};
+const categoryLabels: Record<(typeof registrationCategories)[number], string> =
+  {
+    student_member: "Student Member",
+    graduate_student_member: "Graduate Student Member",
+    professional_member: "Professional Member",
+    faculty_member: "Faculty Member",
+  };
 
 function mapZodErrors(error: z.ZodError): Record<string, string> {
-  const fieldErrors = error.flatten()
-    .fieldErrors as Record<string, string[] | undefined>;
+  const fieldErrors = error.flatten().fieldErrors as Record<
+    string,
+    string[] | undefined
+  >;
   const mapped: Record<string, string> = {};
 
   for (const [field, values] of Object.entries(fieldErrors)) {
@@ -84,12 +92,14 @@ function StepIndicator({ currentStep }: { currentStep: 1 | 2 | 3 }) {
                   isComplete
                     ? "bg-green-500 text-white"
                     : isActive
-                    ? "bg-[#7B1F34] text-white"
-                    : "bg-gray-200 text-gray-500"
+                      ? "bg-[#7B1F34] text-white"
+                      : "bg-gray-200 text-gray-500"
                 }`}
               >
                 {isComplete ? (
-                  <span className="material-symbols-outlined text-base">check</span>
+                  <span className="material-symbols-outlined text-base">
+                    check
+                  </span>
                 ) : (
                   stepNumber
                 )}
@@ -99,8 +109,8 @@ function StepIndicator({ currentStep }: { currentStep: 1 | 2 | 3 }) {
                   isActive
                     ? "text-[#7B1F34]"
                     : isComplete
-                    ? "text-green-600"
-                    : "text-gray-400"
+                      ? "text-green-600"
+                      : "text-gray-400"
                 }`}
               >
                 {label}
@@ -124,7 +134,7 @@ function StepIndicator({ currentStep }: { currentStep: 1 | 2 | 3 }) {
 export default function RegisterPage() {
   const [submitState, submitAction, isSubmitting] = useActionState(
     submitRegistration,
-    initialSubmitState
+    initialSubmitState,
   );
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
@@ -149,15 +159,19 @@ export default function RegisterPage() {
   });
 
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [uploading, setUploading] = useState({ ieeeCard: false, payment: false });
+  const [uploading, setUploading] = useState({
+    ieeeCard: false,
+    payment: false,
+  });
   const [ieeeCardFileName, setIeeeCardFileName] = useState("");
   const [paymentFileName, setPaymentFileName] = useState("");
 
   const serverErrors = useMemo(() => {
     const mapped: Record<string, string> = {};
     const submitErrors =
-      (submitState.errors as Record<string, string[] | undefined> | undefined) ||
-      {};
+      (submitState.errors as
+        | Record<string, string[] | undefined>
+        | undefined) || {};
     for (const [field, values] of Object.entries(submitErrors)) {
       if (values && values.length > 0) {
         mapped[field] = values[0] as string;
@@ -179,9 +193,18 @@ export default function RegisterPage() {
     });
   }
 
-  async function uploadFile(file: File, uploadType: UploadType): Promise<string> {
-    if (!ALLOWED_FILE_TYPES.includes(file.type as (typeof ALLOWED_FILE_TYPES)[number])) {
-      throw new Error("Only JPG, PNG, and WEBP images are allowed.");
+  async function uploadFile(
+    file: File,
+    uploadType: UploadType,
+  ): Promise<string> {
+    const allowedTypes =
+      uploadType === "ieee_card" ? ALLOWED_DOCUMENT_TYPES : ALLOWED_IMAGE_TYPES;
+    if (!(allowedTypes as readonly string[]).includes(file.type)) {
+      const msg =
+        uploadType === "ieee_card"
+          ? "Only JPG, PNG, WEBP images and PDF files are allowed."
+          : "Only JPG, PNG, and WEBP images are allowed.";
+      throw new Error(msg);
     }
 
     if (file.size > MAX_UPLOAD_SIZE_BYTES) {
@@ -199,9 +222,11 @@ export default function RegisterPage() {
       }),
     });
 
-    const urlPayload = (await urlResponse.json().catch(() => null)) as
-      | { uploadUrl?: string; s3Key?: string; error?: string }
-      | null;
+    const urlPayload = (await urlResponse.json().catch(() => null)) as {
+      uploadUrl?: string;
+      s3Key?: string;
+      error?: string;
+    } | null;
 
     if (!urlResponse.ok || !urlPayload?.uploadUrl || !urlPayload?.s3Key) {
       throw new Error(urlPayload?.error || "Failed to get upload URL.");
@@ -347,7 +372,7 @@ export default function RegisterPage() {
 
   if (submitState.success && submitState.profileToken) {
     const profileLink = `/profiles?token=${encodeURIComponent(
-      submitState.profileToken
+      submitState.profileToken,
     )}`;
 
     return (
@@ -398,7 +423,9 @@ export default function RegisterPage() {
 
         {submitState.message && !submitState.success && (
           <div className="mb-6 rounded-r-lg border-l-4 border-red-500 bg-red-50 p-4">
-            <p className="text-sm font-medium text-red-700">{submitState.message}</p>
+            <p className="text-sm font-medium text-red-700">
+              {submitState.message}
+            </p>
           </div>
         )}
 
@@ -412,7 +439,10 @@ export default function RegisterPage() {
                 type="text"
                 value={step1.fullName}
                 onChange={(event) => {
-                  setStep1((prev) => ({ ...prev, fullName: event.target.value }));
+                  setStep1((prev) => ({
+                    ...prev,
+                    fullName: event.target.value,
+                  }));
                   clearFieldError("fullName");
                 }}
                 className={inputClass}
@@ -469,14 +499,19 @@ export default function RegisterPage() {
                 type="text"
                 value={step1.affiliation}
                 onChange={(event) => {
-                  setStep1((prev) => ({ ...prev, affiliation: event.target.value }));
+                  setStep1((prev) => ({
+                    ...prev,
+                    affiliation: event.target.value,
+                  }));
                   clearFieldError("affiliation");
                 }}
                 className={inputClass}
                 placeholder="Your college or organization"
               />
               {errors.affiliation && (
-                <p className="mt-1 text-xs text-red-500">{errors.affiliation}</p>
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.affiliation}
+                </p>
               )}
             </div>
 
@@ -499,7 +534,10 @@ export default function RegisterPage() {
               <select
                 value={step2.category}
                 onChange={(event) => {
-                  setStep2((prev) => ({ ...prev, category: event.target.value }));
+                  setStep2((prev) => ({
+                    ...prev,
+                    category: event.target.value,
+                  }));
                   clearFieldError("category");
                 }}
                 className={`${inputClass} bg-white`}
@@ -526,14 +564,19 @@ export default function RegisterPage() {
                 type="text"
                 value={step2.referralCode}
                 onChange={(event) => {
-                  setStep2((prev) => ({ ...prev, referralCode: event.target.value }));
+                  setStep2((prev) => ({
+                    ...prev,
+                    referralCode: event.target.value,
+                  }));
                   clearFieldError("referralCode");
                 }}
                 className={inputClass}
                 placeholder="Enter referral code (if any)"
               />
               {errors.referralCode && (
-                <p className="mt-1 text-xs text-red-500">{errors.referralCode}</p>
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.referralCode}
+                </p>
               )}
             </div>
 
@@ -575,7 +618,10 @@ export default function RegisterPage() {
                     type="text"
                     value={step2.ieeeId}
                     onChange={(event) => {
-                      setStep2((prev) => ({ ...prev, ieeeId: event.target.value }));
+                      setStep2((prev) => ({
+                        ...prev,
+                        ieeeId: event.target.value,
+                      }));
                       clearFieldError("ieeeId");
                     }}
                     className={inputClass}
@@ -612,7 +658,8 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="mb-1.5 block text-sm font-semibold text-slate-700">
-                    IEEE Membership ID Card <span className="text-red-500">*</span>
+                    IEEE Membership ID Card{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <label className="block cursor-pointer rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 p-6 text-center transition-colors hover:border-[#7B1F34] hover:bg-gray-50">
                     <span className="material-symbols-outlined mb-2 block text-3xl text-gray-400">
@@ -621,23 +668,29 @@ export default function RegisterPage() {
                     {uploading.ieeeCard ? (
                       <p className="text-sm text-[#7B1F34]">Uploading...</p>
                     ) : ieeeCardFileName ? (
-                      <p className="text-sm font-medium text-green-700">{ieeeCardFileName}</p>
+                      <p className="text-sm font-medium text-green-700">
+                        {ieeeCardFileName}
+                      </p>
                     ) : (
                       <p className="text-sm text-gray-500">
-                        Click to upload (JPG, PNG, WEBP, max 500KB)
+                        Click to upload (JPG, PNG, WEBP, PDF — max 500KB)
                       </p>
                     )}
                     <input
                       type="file"
-                      accept="image/jpeg,image/png,image/webp"
+                      accept="image/jpeg,image/png,image/webp,application/pdf"
                       className="hidden"
                       onChange={(event) => {
-                        void handleIeeeCardUpload(event.target.files?.[0] ?? null);
+                        void handleIeeeCardUpload(
+                          event.target.files?.[0] ?? null,
+                        );
                       }}
                     />
                   </label>
                   {errors.ieeeCardS3Key && (
-                    <p className="mt-1 text-xs text-red-500">{errors.ieeeCardS3Key}</p>
+                    <p className="mt-1 text-xs text-red-500">
+                      {errors.ieeeCardS3Key}
+                    </p>
                   )}
                 </div>
               </div>
@@ -669,7 +722,9 @@ export default function RegisterPage() {
             className="space-y-8 rounded-xl bg-white p-8 shadow-lg"
           >
             <div>
-              <h3 className="mb-4 text-lg font-bold text-slate-800">Upload Payment Proof</h3>
+              <h3 className="mb-4 text-lg font-bold text-slate-800">
+                Upload Payment Proof
+              </h3>
               <label className="block cursor-pointer rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 p-6 text-center transition-colors hover:border-[#7B1F34] hover:bg-gray-50">
                 <span className="material-symbols-outlined mb-2 block text-3xl text-gray-400">
                   cloud_upload
@@ -677,10 +732,13 @@ export default function RegisterPage() {
                 {uploading.payment ? (
                   <p className="text-sm text-[#7B1F34]">Uploading...</p>
                 ) : paymentFileName ? (
-                  <p className="text-sm font-medium text-green-700">{paymentFileName}</p>
+                  <p className="text-sm font-medium text-green-700">
+                    {paymentFileName}
+                  </p>
                 ) : (
                   <p className="text-sm text-gray-500">
-                    Click to upload payment screenshot (JPG, PNG, WEBP, max 500KB)
+                    Click to upload payment screenshot (JPG, PNG, WEBP, max
+                    500KB)
                   </p>
                 )}
                 <input
@@ -700,10 +758,12 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <h3 className="mb-4 text-lg font-bold text-slate-800">Bank Transfer Details</h3>
+              <h3 className="mb-4 text-lg font-bold text-slate-800">
+                Bank Transfer Details
+              </h3>
               <p className="mb-4 text-sm text-gray-500">
-                Transfer the registration fee to this account and upload your UTR or
-                transaction screenshot above.
+                Transfer the registration fee to this account and upload your
+                UTR or transaction screenshot above.
               </p>
               <div className="space-y-3 rounded-lg border border-gray-200 bg-gray-50 p-6">
                 <div className="flex items-center justify-between">
@@ -730,7 +790,7 @@ export default function RegisterPage() {
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-sm text-gray-500">Bank Address</span>
                   <span className="max-w-56 text-right text-sm font-semibold text-slate-800">
-                    Poornima Campus Branch, Jaipur, Rajasthan
+                    NSUT Campus Branch, Dwarka, New Delhi
                   </span>
                 </div>
               </div>
@@ -741,7 +801,11 @@ export default function RegisterPage() {
             <input type="hidden" name="phone" value={step1.phone} />
             <input type="hidden" name="affiliation" value={step1.affiliation} />
             <input type="hidden" name="category" value={step2.category} />
-            <input type="hidden" name="referralCode" value={step2.referralCode} />
+            <input
+              type="hidden"
+              name="referralCode"
+              value={step2.referralCode}
+            />
             <input
               type="hidden"
               name="isMember"
@@ -774,7 +838,9 @@ export default function RegisterPage() {
               </button>
               <button
                 type="submit"
-                disabled={isSubmitting || uploading.payment || uploading.ieeeCard}
+                disabled={
+                  isSubmitting || uploading.payment || uploading.ieeeCard
+                }
                 className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#7B1F34] py-3 text-sm font-bold text-white transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting ? (

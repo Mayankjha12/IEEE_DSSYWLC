@@ -6,43 +6,101 @@ export default function ContactSection() {
           {/* Left: Contact info */}
           <div>
             <p className="text-gray-500 text-sm mb-8">
-              For inquiries regarding registration or sponsorship, please reach out to the respective coordinators.
+              For inquiries regarding registration or sponsorship, please reach
+              out to the respective coordinators.
             </p>
 
             <div className="space-y-8">
               <div>
-                <h4 className="text-slate-800 font-bold text-sm mb-2">Congress Venue</h4>
+                <h4 className="text-slate-800 font-bold text-sm mb-2">
+                  Congress Venue
+                </h4>
                 <p className="text-gray-500 text-sm leading-relaxed">
-                  Poornima Institute of Engineering &amp; Technology, Jaipur<br />
-                  ISI - 2, Poornima Marg, Sitapura<br />
-                  Jaipur, Rajasthan 302022, India
+                  Netaji Subhas University of Technology (NSUT)
+                  <br />
+                  Azad Hind Fauj Marg, Sector-3, Dwarka
+                  <br />
+                  New Delhi – 110078, India
                 </p>
               </div>
 
               <div>
-                <h4 className="text-slate-800 font-bold text-sm mb-2">Contact</h4>
-                <a href="tel:+919876543210" className="text-[#7B1F34] text-sm font-semibold hover:underline">+91 98765 43210</a>
+                <h4 className="text-slate-800 font-bold text-sm mb-2">
+                  Contact
+                </h4>
+                <a
+                  href="tel:+911125099017"
+                  className="text-[#7B1F34] text-sm font-semibold hover:underline"
+                >
+                  +91 11 2509 9017
+                </a>
+                <p className="text-gray-400 text-xs mt-1">
+                  9:30 AM to 6:00 PM, Mon–Fri
+                </p>
               </div>
 
               <div>
-                <h4 className="text-slate-800 font-bold text-sm mb-2">General Inquiries</h4>
-                <a href="mailto:ieee@poornima.org" className="text-[#7B1F34] text-sm font-semibold hover:underline">ieee@poornima.org</a>
+                <h4 className="text-slate-800 font-bold text-sm mb-2">
+                  General Inquiries
+                </h4>
+                <a
+                  href="mailto:academic@nsut.ac.in"
+                  className="text-[#7B1F34] text-sm font-semibold hover:underline"
+                >
+                  academic@nsut.ac.in
+                </a>
               </div>
 
               {/* Coordinators */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
                 <div>
-                  <h5 className="text-slate-700 font-bold text-xs uppercase tracking-wider mb-3">IEEE Student Branch Representatives</h5>
+                  <h5 className="text-slate-700 font-bold text-xs uppercase tracking-wider mb-3">
+                    IEEE Student Branch Representatives
+                  </h5>
                   <div className="space-y-2 text-sm text-gray-600">
-                    <p>Alex Johnson — <a href="tel:+919876543210" className="text-[#7B1F34] hover:underline">+91 98765 43210</a></p>
-                    <p>Sarah Williams — <a href="tel:+919876543211" className="text-[#7B1F34] hover:underline">+91 98765 43211</a></p>
+                    <p>
+                      Alex Johnson —{" "}
+                      <a
+                        href="tel:+919876543210"
+                        className="text-[#7B1F34] hover:underline"
+                      >
+                        +91 98765 43210
+                      </a>
+                    </p>
+                    <p>
+                      Sarah Williams —{" "}
+                      <a
+                        href="tel:+919876543211"
+                        className="text-[#7B1F34] hover:underline"
+                      >
+                        +91 98765 43211
+                      </a>
+                    </p>
                   </div>
                 </div>
                 <div>
-                  <h5 className="text-slate-700 font-bold text-xs uppercase tracking-wider mb-3">IEEE Student Section Representatives</h5>
+                  <h5 className="text-slate-700 font-bold text-xs uppercase tracking-wider mb-3">
+                    IEEE Student Section Representatives
+                  </h5>
                   <div className="space-y-2 text-sm text-gray-600">
-                    <p>Michael Brown — <a href="tel:+919876543212" className="text-[#7B1F34] hover:underline">+91 98765 43212</a></p>
-                    <p>Emily Davis — <a href="tel:+919876543213" className="text-[#7B1F34] hover:underline">+91 98765 43213</a></p>
+                    <p>
+                      Michael Brown —{" "}
+                      <a
+                        href="tel:+919876543212"
+                        className="text-[#7B1F34] hover:underline"
+                      >
+                        +91 98765 43212
+                      </a>
+                    </p>
+                    <p>
+                      Emily Davis —{" "}
+                      <a
+                        href="tel:+919876543213"
+                        className="text-[#7B1F34] hover:underline"
+                      >
+                        +91 98765 43213
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -52,30 +110,67 @@ export default function ContactSection() {
           {/* Right: Map / How to Reach */}
           <div>
             <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm mb-8">
-              <img className="w-full h-[300px] object-cover" alt="Map view of PIET Jaipur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDME8If4lXPmeOz3ez1yra5hT6s9IS4q9UnEYJsAjdY1nf22sexeSYspxmdXC_Ec78zMp4upYGxXhUzektXo0iWPhCJeouB538a2e5ArzhytHp7uYl2ZO1wRqJYsadAwbggUozmI4G8QmeqDPZp1UJvpzD0oTZFBJmuGWPivdnUTy6yqNZB7abMHBlkfUg0dDMz6bm0j8lPPLcu-ITrGpiimcn8yTuX2BGfUrz2zoF4Hdr8v12mGDsITn0xyvzI8bNqgZk8PAY9Qnk"/>
+              <iframe
+                className="w-full h-[300px]"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.123456789!2d77.0369!3d28.6092!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1b1234567890%3A0x1234567890abcdef!2sNetaji%20Subhas%20University%20of%20Technology!5e0!3m2!1sen!2sin!4v1234567890"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="NSUT Dwarka Campus Map"
+              />
             </div>
 
-            <h4 className="text-slate-800 font-bold text-sm mb-4">How to Reach</h4>
+            <h4 className="text-slate-800 font-bold text-sm mb-4">
+              How to Reach
+            </h4>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#7B1F34] text-lg mt-0.5">flight</span>
+                <span className="material-symbols-outlined text-[#7B1F34] text-lg mt-0.5">
+                  train
+                </span>
                 <div>
-                  <p className="text-slate-700 text-sm font-semibold">From Jaipur International Airport</p>
-                  <p className="text-gray-400 text-xs">30 minutes drive</p>
+                  <p className="text-slate-700 text-sm font-semibold">
+                    Dwarka Mor Metro Station (Blue Line)
+                  </p>
+                  <p className="text-gray-400 text-xs">
+                    ~1 km — 5–7 min by auto / 15 min walk
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#7B1F34] text-lg mt-0.5">train</span>
+                <span className="material-symbols-outlined text-[#7B1F34] text-lg mt-0.5">
+                  flight
+                </span>
                 <div>
-                  <p className="text-slate-700 text-sm font-semibold">From Gandhinagar Railway Station</p>
-                  <p className="text-gray-400 text-xs">40 minutes drive</p>
+                  <p className="text-slate-700 text-sm font-semibold">
+                    From IGI Airport
+                  </p>
+                  <p className="text-gray-400 text-xs">~12 km drive</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#7B1F34] text-lg mt-0.5">train</span>
+                <span className="material-symbols-outlined text-[#7B1F34] text-lg mt-0.5">
+                  train
+                </span>
                 <div>
-                  <p className="text-slate-700 text-sm font-semibold">From Jaipur Central Station</p>
-                  <p className="text-gray-400 text-xs">40 minutes drive</p>
+                  <p className="text-slate-700 text-sm font-semibold">
+                    From New Delhi Railway Station
+                  </p>
+                  <p className="text-gray-400 text-xs">~30 km drive</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="material-symbols-outlined text-[#7B1F34] text-lg mt-0.5">
+                  directions_bus
+                </span>
+                <div>
+                  <p className="text-slate-700 text-sm font-semibold">
+                    DTC / Cluster Bus Routes
+                  </p>
+                  <p className="text-gray-400 text-xs">
+                    764, 765, 850, D-068, DW-3, DW-4, AIR-08
+                  </p>
                 </div>
               </div>
             </div>

@@ -13,7 +13,7 @@ export const registrations = pgTable(
     id: serial("id").primaryKey(),
     profileToken: text("profile_token").notNull().unique(),
     fullName: text("full_name").notNull(),
-    email: text("email").notNull().unique(),
+    email: text("email").notNull(),
     phone: text("phone").notNull(),
     affiliation: text("affiliation").notNull(),
     category: text("category").notNull(), // student_member | graduate_student_member | professional_member | faculty_member
@@ -27,7 +27,7 @@ export const registrations = pgTable(
     paymentScreenshotS3Key: text("payment_screenshot_s3_key"),
     registrationStatus: text("registration_status")
       .notNull()
-      .default("under_review"), // under_review | verified | rejected
+      .default("under_review"), // under_review | verified | rejected | needs_info
     // Timestamps
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),

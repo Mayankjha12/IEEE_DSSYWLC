@@ -147,16 +147,12 @@
         "registrations_profile_token_unique": {
           "name": "registrations_profile_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "profile_token"
-          ]
+          "columns": ["profile_token"]
         },
         "registrations_email_unique": {
           "name": "registrations_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},

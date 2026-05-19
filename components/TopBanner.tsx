@@ -7,7 +7,10 @@ export default function TopBanner() {
         <span className="text-xl leading-none">⚠️</span>
         <span className="inline-block">
           Last Day to Register! Registrations close on 5th February 2026.{" "}
-          <Link href="/register" className="underline font-bold hover:text-gray-200 ml-1">
+          <Link
+            href="/register"
+            className="underline font-bold hover:text-gray-200 ml-1"
+          >
             Register Now
           </Link>
         </span>

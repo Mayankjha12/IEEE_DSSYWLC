@@ -94,3 +94,88 @@ export async function sendConfirmationEmail(
     return false;
   }
 }
+
+const STATUS_LABELS: Record<string, { label: string; color: string }> = {
+  verified: { label: "Approved ✅", color: "#16a34a" },
+  rejected: { label: "Rejected ❌", color: "#dc2626" },
+  needs_info: { label: "More Information Needed ⚠️", color: "#d97706" },
+  under_review: { label: "Under Review", color: "#6b7280" },
+};
+
+export async function sendStatusUpdateEmail(
+  to: string,
+  name: string,
+  newStatus: string,
+  profileToken: string,
+  remarks: string | null
+): Promise<boolean> {
+  const config = getSmtpConfig();
+
+  if (!config) {
+    console.warn("Brevo SMTP not configured. Skipping status email.");
+    return false;
+  }
+
+  const profileUrl = `${getSiteUrl()}/profiles?token=${encodeURIComponent(
+    profileToken
+  )}`;
+
+  const statusInfo = STATUS_LABELS[newStatus] || STATUS_LABELS.under_review;
+
+  const transporter = nodemailer.createTransport({
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
+    auth: {
+      user: config.user,
+      pass: config.pass,
+    },
+  });
+
+  const remarksBlock = remarks
+    ? `<p style="background: #fef3c7; padding: 12px; border-radius: 6px; border-left: 4px solid #d97706;"><strong>Reviewer Remarks:</strong><br/>${remarks}</p>`
+    : "";
+
+  try {
+    await transporter.sendMail({
+      from: `"${config.fromName}" <${config.fromEmail}>`,
+      to,
+      subject: `DSSYWLC 2025 — Registration ${statusInfo.label}`,
+      text: [
+        `Hi ${name},`,
+        "",
+        `Your DSSYWLC 2025 registration status has been updated to: ${statusInfo.label}`,
+        "",
+        remarks ? `Reviewer remarks: ${remarks}` : "",
+        "",
+        `View your profile: ${profileUrl}`,
+        "",
+        "DSSYWLC 2025",
+      ]
+        .filter(Boolean)
+        .join("\n"),
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
+          <p>Hi ${name},</p>
+          <p>Your DSSYWLC 2025 registration status has been updated:</p>
+          <p style="font-size: 18px;">
+            <strong style="color: ${statusInfo.color};">${statusInfo.label}</strong>
+          </p>
+          ${remarksBlock}
+          <p>
+            View your registration profile:<br />
+            <a href="${profileUrl}">${profileUrl}</a>
+          </p>
+          <p style="margin-top: 24px; color: #6b7280; font-size: 13px;">
+            Delhi Section Student, Young Professionals, Women in Engineering & Life Members Congress
+          </p>
+        </div>
+      `,
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Failed to send status update email:", error);
+    return false;
+  }
+}

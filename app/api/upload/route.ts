@@ -2,10 +2,12 @@ import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import {
   ALLOWED_IMAGE_CONTENT_TYPES,
+  ALLOWED_DOCUMENT_CONTENT_TYPES,
   MAX_UPLOAD_SIZE_BYTES,
   buildS3ObjectKey,
   generatePresignedUploadUrl,
   isAllowedImageContentType,
+  isAllowedDocumentContentType,
 } from "@/lib/s3";
 
 type UploadType = "ieee_card" | "payment_screenshot";
@@ -31,7 +33,10 @@ function cleanExpiredEntries(store: Map<string, RateLimitEntry>) {
   }
 }
 
-function exceedsLimit(store: Map<string, RateLimitEntry>, key: string): boolean {
+function exceedsLimit(
+  store: Map<string, RateLimitEntry>,
+  key: string,
+): boolean {
   const now = Date.now();
   const existing = store.get(key);
 
@@ -95,12 +100,16 @@ export async function POST(request: NextRequest) {
   const sessionId = existingSessionId ?? randomUUID();
   const sessionKey = `session:${sessionId}`;
 
-  if (exceedsLimit(ipRateLimits, ipKey) || exceedsLimit(sessionRateLimits, sessionKey)) {
+  if (
+    exceedsLimit(ipRateLimits, ipKey) ||
+    exceedsLimit(sessionRateLimits, sessionKey)
+  ) {
     return NextResponse.json(
       {
-        error: "Too many upload URL requests. Please wait a few minutes and try again.",
+        error:
+          "Too many upload URL requests. Please wait a few minutes and try again.",
       },
-      { status: 429 }
+      { status: 429 },
     );
   }
 
@@ -108,7 +117,10 @@ export async function POST(request: NextRequest) {
   try {
     payload = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid JSON payload." },
+      { status: 400 },
+    );
   }
 
   const fileName =
@@ -133,16 +145,24 @@ export async function POST(request: NextRequest) {
   if (!fileName || !uploadType) {
     return NextResponse.json(
       { error: "fileName and uploadType are required." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
-  if (!isAllowedImageContentType(fileType)) {
+  const isDocUpload = uploadType === "ieee_card";
+  const allowedTypes = isDocUpload
+    ? ALLOWED_DOCUMENT_CONTENT_TYPES
+    : ALLOWED_IMAGE_CONTENT_TYPES;
+  const isTypeAllowed = isDocUpload
+    ? isAllowedDocumentContentType(fileType)
+    : isAllowedImageContentType(fileType);
+
+  if (!isTypeAllowed) {
     return NextResponse.json(
       {
-        error: `Unsupported file type. Allowed types: ${ALLOWED_IMAGE_CONTENT_TYPES.join(", ")}`,
+        error: `Unsupported file type. Allowed types: ${allowedTypes.join(", ")}`,
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -150,14 +170,14 @@ export async function POST(request: NextRequest) {
     if (!Number.isFinite(fileSize) || fileSize <= 0) {
       return NextResponse.json(
         { error: "Invalid fileSize value." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (fileSize > MAX_UPLOAD_SIZE_BYTES) {
       return NextResponse.json(
         { error: "File size must be 500KB or smaller." },
-        { status: 400 }
+        { status: 400 },
       );
     }
   }
@@ -166,16 +186,18 @@ export async function POST(request: NextRequest) {
   if (sizeHintFromName !== null && sizeHintFromName > MAX_UPLOAD_SIZE_BYTES) {
     return NextResponse.json(
       { error: "File name suggests file exceeds the 500KB limit." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   try {
     const registrationId = `${sessionId}-${uploadType}`;
-    const key = buildS3ObjectKey(registrationId, fileType);
+    const validatedType =
+      fileType as import("@/lib/s3").AllowedDocumentContentType;
+    const key = buildS3ObjectKey(registrationId, validatedType);
     const { url, key: s3Key } = await generatePresignedUploadUrl({
       key,
-      contentType: fileType,
+      contentType: validatedType,
       fileSizeBytes: fileSize,
     });
 
@@ -198,7 +220,7 @@ export async function POST(request: NextRequest) {
     console.error("Failed to generate upload URL:", error);
     return NextResponse.json(
       { error: "Unable to generate upload URL right now." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

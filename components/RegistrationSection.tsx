@@ -5,8 +5,13 @@ export default function RegistrationSection() {
     <section className="py-20 bg-white" id="registration">
       <div className="section-container">
         <div className="text-center mb-16 animate-on-scroll">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-3">Registration Plans</h2>
-          <p className="text-gray-500 mb-4">Choose the plan that suits you best. Early bird registration ends soon.</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-3">
+            Registration Plans
+          </h2>
+          <p className="text-gray-500 mb-4">
+            Choose the plan that suits you best. Early bird registration ends
+            soon.
+          </p>
           <div className="w-16 h-0.5 bg-[#7B1F34] mx-auto"></div>
         </div>
 
@@ -16,40 +21,52 @@ export default function RegistrationSection() {
             <div className="absolute -top-3 right-6 bg-[#7B1F34] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded">
               Recommended
             </div>
-            <h3 className="text-xl font-bold text-slate-800 mb-2">IEEE Members</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-2">
+              IEEE Members
+            </h3>
             <p className="text-3xl font-bold text-[#7B1F34] mb-6">₹700</p>
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-sm text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#7B1F34]"></span> Full Access to All Sessions
+                <span className="w-1.5 h-1.5 rounded-full bg-[#7B1F34]"></span>{" "}
+                Full Access to All Sessions
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#7B1F34]"></span> Conference Kit
+                <span className="w-1.5 h-1.5 rounded-full bg-[#7B1F34]"></span>{" "}
+                Conference Kit
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#7B1F34]"></span> Lunch &amp; High Tea
+                <span className="w-1.5 h-1.5 rounded-full bg-[#7B1F34]"></span>{" "}
+                Lunch &amp; High Tea
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#7B1F34]"></span> Certificate of Participation
+                <span className="w-1.5 h-1.5 rounded-full bg-[#7B1F34]"></span>{" "}
+                Certificate of Participation
               </li>
             </ul>
           </div>
 
           {/* Non-IEEE Member */}
           <div className="bg-white rounded-lg border border-gray-200 p-8 shadow-sm">
-            <h3 className="text-xl font-bold text-slate-800 mb-2">Non-IEEE Members</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-2">
+              Non-IEEE Members
+            </h3>
             <p className="text-3xl font-bold text-slate-800 mb-6">₹1000</p>
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-sm text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Full Access to All Sessions
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span>{" "}
+                Full Access to All Sessions
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Conference Kit
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span>{" "}
+                Conference Kit
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Lunch &amp; High Tea
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span>{" "}
+                Lunch &amp; High Tea
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Certificate of Participation
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span>{" "}
+                Certificate of Participation
               </li>
             </ul>
           </div>
