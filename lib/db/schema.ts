@@ -13,7 +13,7 @@ export const registrations = pgTable(
     id: serial("id").primaryKey(),
     profileToken: text("profile_token").notNull().unique(),
     fullName: text("full_name").notNull(),
-    email: text("email").notNull(),
+    email: text("email").notNull().unique(),
     phone: text("phone").notNull(),
     affiliation: text("affiliation").notNull(),
     category: text("category").notNull(), // student_member | graduate_student_member | professional_member | faculty_member
