@@ -86,8 +86,9 @@ export async function POST(request: NextRequest) {
       .where(eq(registrations.email, normalizedEmail));
 
     // Send email notification if status actually changed
+    let emailSent = false;
     if (previousStatus !== status) {
-      await sendStatusUpdateEmail(
+      emailSent = await sendStatusUpdateEmail(
         normalizedEmail,
         registration.fullName,
         status,
@@ -99,7 +100,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: `Status updated to "${status}" for ${normalizedEmail}`,
-      emailSent: previousStatus !== status,
+      emailSent,
     });
   } catch (error) {
     console.error("Status update failed:", error);
