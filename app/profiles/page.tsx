@@ -87,6 +87,18 @@ export default async function ProfilesPage({
   return (
     <div className="min-h-screen bg-[#f0f4f8] px-4 py-12">
       <div className="mx-auto max-w-3xl space-y-6">
+        {/* Email Notification Banner */}
+        <div className="rounded-xl bg-blue-50 border-2 border-blue-200 p-5 shadow-md flex items-start gap-4">
+          <span className="text-3xl leading-none mt-0.5">📧</span>
+          <div>
+            <p className="text-blue-900 font-bold text-base">
+              A confirmation and status updates are sent to your registered email address.
+            </p>
+            <p className="text-blue-700 text-sm mt-1">
+              Please check your inbox (and spam folder) for emails from <strong>no-reply@ieeensut.com</strong>
+            </p>
+          </div>
+        </div>
         <div className="rounded-xl bg-white p-8 shadow-lg">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -194,10 +206,7 @@ export default async function ProfilesPage({
               Current status:{" "}
               <span className="font-semibold">{statusLabel}</span>
             </p>
-            <p className="text-gray-500">
-              A confirmation and status updates are sent to your registered
-              email address.
-            </p>
+
           </div>
         </div>
       </div>
