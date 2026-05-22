@@ -81,20 +81,42 @@ export async function submitRegistration(
   const normalizedEmail = step1Parsed.data.email.trim().toLowerCase();
 
   try {
-    const existing = await db
+    const existingEmail = await db
       .select({ profileToken: registrations.profileToken })
       .from(registrations)
       .where(eq(registrations.email, normalizedEmail))
       .limit(1);
 
-    const profileToken =
-      existing[0]?.profileToken ?? randomBytes(32).toString("hex");
+    if (existingEmail.length > 0) {
+      return {
+        success: false,
+        message:
+          "This email address has already been used for registration. Each participant can only register once.",
+      };
+    }
+
+    const normalizedPhone = step1Parsed.data.phone.trim();
+    const existingPhone = await db
+      .select({ profileToken: registrations.profileToken })
+      .from(registrations)
+      .where(eq(registrations.phone, normalizedPhone))
+      .limit(1);
+
+    if (existingPhone.length > 0) {
+      return {
+        success: false,
+        message:
+          "This phone number has already been used for registration. Each participant can only register once.",
+      };
+    }
+
+    const profileToken = randomBytes(32).toString("hex");
 
     const values = {
       profileToken,
       fullName: step1Parsed.data.fullName.trim(),
       email: normalizedEmail,
-      phone: step1Parsed.data.phone.trim(),
+      phone: normalizedPhone,
       affiliation: step1Parsed.data.affiliation.trim(),
       category: step2Parsed.data.category,
       referralCode: step2Parsed.data.referralCode?.trim() || null,
@@ -113,10 +135,7 @@ export async function submitRegistration(
       updatedAt: now,
     };
 
-    await db.insert(registrations).values(values).onConflictDoUpdate({
-      target: registrations.email,
-      set: values,
-    });
+    await db.insert(registrations).values(values);
 
     const emailSent = await sendConfirmationEmail(
       normalizedEmail,
@@ -149,8 +168,8 @@ export async function submitRegistration(
       success: true,
       profileToken,
       message: emailSent
-        ? "Registration submitted successfully."
-        : "Registration submitted successfully. Confirmation email is currently unavailable.",
+        ? "Registration submitted successfully! A confirmation and status updates will be sent to your registered email address."
+        : "Registration submitted successfully! Status updates will be sent to your registered email address.",
     };
   } catch (error) {
     console.error("Registration submission failed:", error);

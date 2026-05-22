@@ -11,13 +11,11 @@ export default function Footer() {
             alt="DSSYWLC '25"
             className="h-14 w-auto object-contain"
           />
-          <div className="bg-white/90 rounded-lg px-3 py-2">
-            <img
-              src="/logos/ssn-logo.png"
-              alt="IEEE NSUT"
-              className="h-12 w-auto object-contain"
-            />
-          </div>
+          <img
+            src="/logos/ssn-logo.png"
+            alt="IEEE NSUT"
+            className="h-12 w-auto object-contain"
+          />
           <img
             src="/logos/ieee-logo.png"
             alt="IEEE Delhi Section SAC"

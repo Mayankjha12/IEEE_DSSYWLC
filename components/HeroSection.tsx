@@ -49,13 +49,11 @@ export default function HeroSection() {
                 alt="DSSYWLC '25 — IEEE Delhi Section SAC"
                 className="h-16 w-auto object-contain"
               />
-              <div className="bg-white/90 rounded-lg px-3 py-2">
-                <img
-                  src="/logos/ssn-logo.png"
-                  alt="IEEE NSUT Student Branch"
-                  className="h-14 w-auto object-contain"
-                />
-              </div>
+              <img
+                src="/logos/ssn-logo.png"
+                alt="IEEE NSUT Student Branch"
+                className="h-14 w-auto object-contain"
+              />
               <img
                 src="/logos/ieee-logo.png"
                 alt="IEEE Delhi Section Student Activities Committee"

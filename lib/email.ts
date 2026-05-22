@@ -13,7 +13,7 @@
 function getEmailConfig() {
   const apiKey = process.env.BREVO_API_KEY;
   const fromEmail = process.env.BREVO_FROM_EMAIL;
-  const fromName = process.env.BREVO_FROM_NAME || "DSSYWLC 2026";
+  const fromName = process.env.BREVO_FROM_NAME || "DSSYWLC '25";
 
   if (!apiKey || !fromEmail) {
     return null;
@@ -90,27 +90,27 @@ export async function sendConfirmationEmail(
 
   return sendEmail({
     to,
-    subject: "DSSYWLC 2026 — Registration Received",
+    subject: "DSSYWLC '25 — Registration Received",
     textContent: [
       `Hi ${name},`,
       "",
-      "Your DSSYWLC 2026 registration has been received.",
+      "Your DSSYWLC '25 registration has been received.",
       "Current status: Under review",
       "",
       `Track your profile here: ${profileUrl}`,
       "",
-      "DSSYWLC 2026",
+      "DSSYWLC '25",
     ].join("\n"),
     htmlContent: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
         <p>Hi ${name},</p>
-        <p>Your DSSYWLC 2026 registration has been received.</p>
+        <p>Your DSSYWLC '25 registration has been received.</p>
         <p><strong>Status:</strong> Under review</p>
         <p>
           You can view your registration profile here:<br />
           <a href="${profileUrl}">${profileUrl}</a>
         </p>
-        <p>Thank you for registering for DSSYWLC 2026.</p>
+        <p>Thank you for registering for DSSYWLC '25.</p>
         <p style="margin-top: 24px; color: #6b7280; font-size: 13px;">
           Delhi Section Student, Young Professionals, Women in Engineering &amp; Life Members Congress
         </p>
@@ -145,24 +145,24 @@ export async function sendStatusUpdateEmail(
 
   return sendEmail({
     to,
-    subject: `DSSYWLC 2026 — Registration ${statusInfo.label}`,
+    subject: `DSSYWLC '25 — Registration ${statusInfo.label}`,
     textContent: [
       `Hi ${name},`,
       "",
-      `Your DSSYWLC 2026 registration status has been updated to: ${statusInfo.label}`,
+      `Your DSSYWLC '25 registration status has been updated to: ${statusInfo.label}`,
       "",
       remarks ? `Reviewer remarks: ${remarks}` : "",
       "",
       `View your profile: ${profileUrl}`,
       "",
-      "DSSYWLC 2026",
+      "DSSYWLC '25",
     ]
       .filter(Boolean)
       .join("\n"),
     htmlContent: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
         <p>Hi ${name},</p>
-        <p>Your DSSYWLC 2026 registration status has been updated:</p>
+        <p>Your DSSYWLC '25 registration status has been updated:</p>
         <p style="font-size: 18px;">
           <strong style="color: ${statusInfo.color};">${statusInfo.label}</strong>
         </p>
