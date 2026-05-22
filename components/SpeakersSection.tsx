@@ -6,34 +6,39 @@ export default function SpeakersSection() {
       img: "/speakers/vc-nsut.png",
     },
     {
-      name: "Prof. Shampa Chakraverty",
-      role: "Dean of Student Welfare, NSUT",
-      img: "/speakers/dsw-nsut.png",
-    },
-    {
-      name: "Prof. (Dr.) Prerna Gaur",
-      role: "Director, NSUT West Campus, Chair — IEEE India Council",
+      name: "Prof. Prerna Gaur",
+      role: "Chair — IEEE India Council",
       img: "https://res.cloudinary.com/dlia5xgwx/image/upload/v1770186781/drprernagaur_lp5okn.jpg",
     },
     {
-      name: "Prof. (Dr.) Preeti Bajaj",
-      role: "Chair-Elect, IEEE India Council, Director — KIET Group of Institutions",
+      name: "Dr. Preeti Bajaj",
+      role: "Chair-Elect — IEEE India Council",
       img: "/speakers/preeti-bajaj.png",
     },
     {
-      name: "Dr. M. N. Hoda",
-      role: "Director, Bharti Vidyapeeth & Chairperson, IEEE Delhi Section",
+      name: "Prof. M.N. Hoda",
+      role: "Chairperson — IEEE Delhi Section",
       img: "https://res.cloudinary.com/dlia5xgwx/image/upload/v1770186780/mnhoda_thmusc.jpg",
     },
     {
-      name: "Deepak Mathur",
-      role: "Past IEEE Region 10 Director & VP — IEEE MGA",
+      name: "Mr. Deepak Mathur",
+      role: "Director — IEEE Region 10",
       img: "/speakers/deepak-mathur.png",
     },
     {
-      name: "Prof. (Dr.) Sneha Kabra",
-      role: "Secretary, IEEE Delhi Section, Senior Member IEEE, Fellow IETE",
+      name: "Dr. S.S. Jamuar",
+      role: "Delhi Section LMAG Secretary",
+      img: "https://res.cloudinary.com/dlia5xgwx/image/upload/v1770186780/mnhoda_thmusc.jpg",
+    },
+    {
+      name: "Ms. Sneha Kabra",
+      role: "Secretary — IEEE Delhi Section",
       img: "https://res.cloudinary.com/dlia5xgwx/image/upload/v1770186781/snehakabra_xf0qis.jpg",
+    },
+    {
+      name: "Prof. Arti M K",
+      role: "Dean (Student Welfare), NSUT",
+      img: "/speakers/dsw-nsut.png",
     },
   ];
 
