@@ -97,7 +97,7 @@ export default function ScheduleSection() {
   const day2: ScheduleItem[] = [
     {
       time: "09:30 – 10:00 AM",
-      title: "Breakfast (Networking Session 4)",
+      title: "Breakfast (Networking - 4)",
       description: "",
       highlight: false,
     },
@@ -105,56 +105,50 @@ export default function ScheduleSection() {
       time: "10:00 – 10:45 AM",
       title: "IEEE VTools Reporting",
       description:
-        "Learn how to effectively use IEEE VTools to report events, manage records, and maintain proper documentation aligned with IEEE guidelines",
+        "Learn how to effectively use IEEE vTools to report events, manage records, and maintain proper documentation. Understand best practices to ensure your activities are recognised and aligned with IEEE guidelines.",
       highlight: false,
     },
     {
       time: "10:45 – 11:30 AM",
-      title: "IEEE Funding & Scholarship Opportunities",
+      title: "IEEE Funding and Scholarship Opportunities",
       description:
-        "Explore IEEE funding avenues for student branches and chapters. Get insights on crafting strong proposals and securing financial support",
+        "Explore various IEEE funding avenues available for student branches and chapters to support events and initiatives. Get insights on crafting strong proposals and increasing your chances of securing financial support.",
       highlight: false,
     },
     {
       time: "11:30 AM – 12:00 PM",
-      title: "High Tea (Networking Session 5)",
+      title: "High Tea (Networking - 5)",
       description: "",
       highlight: false,
     },
     {
       time: "12:00 – 02:00 PM",
-      title: "Student Branch Chairs Meet & Presentation",
+      title: "Student Branch Chairs Meet and Presentation",
       description: "",
       highlight: true,
     },
     {
       time: "02:00 – 03:00 PM",
-      title: "Lunch (Networking Session 6)",
+      title: "Lunch (Networking - 6)",
       description: "",
       highlight: false,
     },
     {
       time: "03:00 – 03:45 PM",
-      title: "Poetry & E-Gaming",
+      title: "Keynote Speaker Session",
       description: "",
-      highlight: false,
+      highlight: true,
     },
     {
       time: "03:45 – 04:15 PM",
-      title: "Hackathon / Business Pitch Presentations",
-      description: "Presentation of hackathon or business pitch projects",
-      highlight: false,
-    },
-    {
-      time: "04:15 – 04:45 PM",
-      title: "Tea Session (Networking Session 7)",
+      title: "Tea Session (Networking - 7)",
       description:
-        "A light and refreshing break to recharge and unwind. Connect and relax with fellow participants",
+        "A light and refreshing break to recharge and unwind amidst the day's activities. Enjoy a selection of snacks while connecting and relaxing with fellow participants.",
       highlight: false,
     },
     {
-      time: "04:45 – 06:30 PM",
-      title: "Awards Ceremony",
+      time: "04:15 – 06:30 PM",
+      title: "Awards",
       description: "",
       highlight: true,
     },
@@ -162,12 +156,16 @@ export default function ScheduleSection() {
       time: "06:30 – 07:00 PM",
       title: "Cultural Night",
       description:
-        "An electrifying evening filled with music, dance, and vibrant performances celebrating diverse talents and cultures",
+        "An electrifying evening filled with music, dance, and vibrant performances celebrating diverse talents and cultures. Experience unforgettable moments as the stage comes alive with energy, creativity, and pure entertainment.",
       highlight: true,
     },
     {
       time: "07:00 – 08:30 PM",
-      title: "Dinner (Networking Session 8)",
+      title: "Dinner (Networking - 8)",
+      description: "",
+      highlight: false,
+    },
+  ];
       description: "",
       highlight: false,
     },
