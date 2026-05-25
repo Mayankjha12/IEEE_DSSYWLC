@@ -166,10 +166,6 @@ export default function ScheduleSection() {
       highlight: false,
     },
   ];
-      description: "",
-      highlight: false,
-    },
-  ];
 
   const schedule = activeDay === 1 ? day1 : day2;
 
