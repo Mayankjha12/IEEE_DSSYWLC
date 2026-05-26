@@ -10,9 +10,6 @@ export default function HeroSection() {
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/logos/image.png')" }}
         />
-        {/* Added dark gradient overlay to improve hero text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent z-0"></div>
-        {/* Hero Content */}
         <div className="relative z-10 section-container animate-on-scroll">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl  lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.8), 0 1px 4px rgba(0,0,0,0.9)" }}>
