@@ -1,20 +1,6 @@
 export default function AccommodationSection() {
   const hotels = [
     {
-      name: "Hotel Blue Pearl",
-      location: "Sector 3",
-      contact: "7947433731",
-      details: "",
-      distance: "2km",
-    },
-    {
-      name: "Hideaway Bed & Breakfast",
-      location: "Sector 17",
-      contact: "9999991671",
-      details: "",
-      distance: "2.9km",
-    },
-    {
       name: "SSS Group Hotel",
       location: "Mahavir Enclave",
       contact: "98189 14386",
@@ -49,13 +35,6 @@ export default function AccommodationSection() {
       contact: "011 4305 3102",
       details: "3500/night +tax",
       distance: "2km",
-    },
-    {
-      name: "Fabhotel Amar Residency",
-      location: "Sector 7",
-      contact: "",
-      details: "Double sharing=1470/night",
-      distance: "5.2km",
     },
     {
       name: "New Moon",
