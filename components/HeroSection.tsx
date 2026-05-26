@@ -4,36 +4,39 @@ export default function HeroSection() {
   return (
     <section className="relative flex flex-col overflow-hidden">
       {/* 1. Main Hero Area (Above Part with premium background picture) */}
-      <div className="relative min-h-[75vh] flex items-center py-20 md:py-28 z-0">
+      <div className="relative min-h-[75vh] flex items-center py-28 md:py-36 z-0">
         {/* Background Image with normal brightness */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/logos/image.png')" }}
         />
-
+        {/* Added dark gradient overlay to improve hero text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent z-0"></div>
         {/* Hero Content */}
         <div className="relative z-10 section-container animate-on-scroll">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
+          {/* Updated heading typography and added text shadow for better visibility */}
+          <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold font-[family-name:var(--font-outfit)] text-white mb-6 leading-[1.1] tracking-tight drop-shadow-2xl [text-shadow:_2px_2px_8px_rgba(0,0,0,0.8)]">
               Delhi Section Student, Young Professionals &amp; Women in
               Engineering and Life member Congress
             </h1>
 
-            <p className="text-lg text-white/80 max-w-2xl mb-10 leading-relaxed">
+            <p className="text-lg text-white/90 max-w-2xl mb-10 leading-relaxed drop-shadow-md">
               Converging young minds, visionary women engineers, and distinguished
               life members for a future of innovation.
             </p>
+            {/* Enhanced CTA buttons with rounded corners and hover animations */}
 
             <div className="flex flex-wrap gap-4">
               <a
                 href="#schedule"
-                className="px-8 py-3 bg-white text-[#7B1F34] rounded font-bold text-sm hover:bg-gray-100 transition-all shadow-md inline-block"
+                className="px-8 py-3 bg-white text-[#7B1F34] rounded-xl font-bold text-sm hover:bg-gray-100 hover:scale-105 duration-300 transition-all shadow-md inline-block"
               >
                 View Schedule
               </a>
               <Link
                 href="/register"
-                className="px-8 py-3 border-2 border-white text-white rounded font-bold text-sm hover:bg-white/10 transition-all shadow-md inline-block"
+                className="px-8 py-3 border-2 border-white text-white rounded-xl font-bold text-sm hover:bg-white/10 hover:scale-105 duration-300 transition-all shadow-md inline-block"
               >
                 Register Now
               </Link>
