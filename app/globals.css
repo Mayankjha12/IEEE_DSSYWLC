@@ -79,6 +79,10 @@
     "opsz" 24;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Inter", sans-serif;
   background-color: #ffffff;
