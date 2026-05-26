@@ -79,22 +79,50 @@ export async function submitRegistration(
 
   const now = new Date();
   const normalizedEmail = step1Parsed.data.email.trim().toLowerCase();
+  const normalizedPhone = step1Parsed.data.phone.trim();
 
   try {
-    const existing = await db
-      .select({ profileToken: registrations.profileToken })
+    // Check if email already exists
+    const existingEmail = await db
+      .select({ id: registrations.id })
       .from(registrations)
       .where(eq(registrations.email, normalizedEmail))
       .limit(1);
 
-    const profileToken =
-      existing[0]?.profileToken ?? randomBytes(32).toString("hex");
+    if (existingEmail.length > 0) {
+      return {
+        success: false,
+        errors: {
+          email: ["This email address is already registered."],
+        },
+        message: "This email address is already registered.",
+      };
+    }
+
+    // Check if phone number already exists
+    const existingPhone = await db
+      .select({ id: registrations.id })
+      .from(registrations)
+      .where(eq(registrations.phone, normalizedPhone))
+      .limit(1);
+
+    if (existingPhone.length > 0) {
+      return {
+        success: false,
+        errors: {
+          phone: ["This phone number is already registered."],
+        },
+        message: "This phone number is already registered.",
+      };
+    }
+
+    const profileToken = randomBytes(32).toString("hex");
 
     const values = {
       profileToken,
       fullName: step1Parsed.data.fullName.trim(),
       email: normalizedEmail,
-      phone: step1Parsed.data.phone.trim(),
+      phone: normalizedPhone,
       affiliation: step1Parsed.data.affiliation.trim(),
       category: step2Parsed.data.category,
       referralCode: step2Parsed.data.referralCode?.trim() || null,
@@ -113,10 +141,7 @@ export async function submitRegistration(
       updatedAt: now,
     };
 
-    await db.insert(registrations).values(values).onConflictDoUpdate({
-      target: registrations.email,
-      set: values,
-    });
+    await db.insert(registrations).values(values);
 
     const emailSent = await sendConfirmationEmail(
       normalizedEmail,

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { submitRegistration, type RegisterState } from "@/app/actions/register";
 import {
@@ -137,6 +137,26 @@ export default function RegisterPage() {
     initialSubmitState,
   );
   const [step, setStep] = useState<1 | 2 | 3>(1);
+
+  useEffect(() => {
+    if (submitState.errors) {
+      const step1Fields = ["fullName", "email", "phone", "affiliation"];
+      const step2Fields = [
+        "category",
+        "referralCode",
+        "isMember",
+        "ieeeId",
+        "studentBranchCode",
+        "ieeeCardS3Key",
+      ];
+      const keys = Object.keys(submitState.errors);
+      if (keys.some((key) => step1Fields.includes(key))) {
+        setStep(1);
+      } else if (keys.some((key) => step2Fields.includes(key))) {
+        setStep(2);
+      }
+    }
+  }, [submitState.errors]);
 
   const [step1, setStep1] = useState<Step1FormState>({
     fullName: "",

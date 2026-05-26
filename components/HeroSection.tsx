@@ -5,14 +5,11 @@ export default function HeroSection() {
     <section className="relative flex flex-col overflow-hidden">
       {/* 1. Main Hero Area (Above Part with premium background picture) */}
       <div className="relative min-h-[75vh] flex items-center py-20 md:py-28 z-0">
-        {/* Background Image with Dark Overlay for perfect contrast */}
+        {/* Background Image with normal brightness */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/hero-bg.png')" }}
-        >
-          {/* Maroon/black gradient overlay to make text pop */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#2a050f]/95 via-[#4a0e1e]/85 to-[#000000]/70" />
-        </div>
+          style={{ backgroundImage: "url('/logos/image.png')" }}
+        />
 
         {/* Hero Content */}
         <div className="relative z-10 section-container animate-on-scroll">
