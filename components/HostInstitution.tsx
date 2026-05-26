@@ -69,8 +69,8 @@ export default function HostInstitution() {
           <div className="rounded-xl overflow-hidden shadow-lg">
             <img
               className="w-full h-full object-cover"
-              alt="NSUT Dwarka campus"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo9fGP_rCsilouwZjARaG_z_HtX4lJTKlvgsuQMajtiokI2l4X2Rc-jhszN2hZpn480IEaNNgjZFvwSWEM3p_W_13xxaeZRPCTV5dSWt_meD9Nkx3QqbujptYb0fF9YT-M5GUhqNkrAkwSwS26I5xqyqetidW8-e3r_79dVrT6frDgS_LYg2yhkhXtYRSKxamUBLpjQ-dJOvKTwEo30pUoDudWBRqDvXktd5b_Y9fV4qycC6uG-d4ewyxxd3o2hco4IXIoV4Xprik"
+              alt="NSUT logo"
+              src="/logos/R.jpg"
             />
           </div>
         </div>
