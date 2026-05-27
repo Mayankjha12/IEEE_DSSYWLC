@@ -1,6 +1,8 @@
 export default function SponsorsSection() {
-  return (
-    <section className="py-16 bg-white border-t border-gray-100" id="sponsors">
+  return null;
+
+  {/* return (
+     <section className="py-16 bg-white border-t border-gray-100" id="sponsors">
       <div className="section-container text-center animate-on-scroll">
         <p className="text-gray-500 text-sm mb-10">
           Proudly supported by industry leaders
@@ -20,6 +22,7 @@ export default function SponsorsSection() {
           </span>
         </div>
       </div>
-    </section>
-  );
+    </section> 
+  );  */}
 }
+
